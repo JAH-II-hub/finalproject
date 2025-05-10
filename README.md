@@ -1,6 +1,6 @@
 # language Scanner
 
-A lexical analyzer (scanner) that tokenizes arithmetic expressions with support for negative numbers and parentheses.
+A scanner that tokenizes arithmetic expressions, numbers, and unknown inputs.
 
 ## Features
 . Tokenizes: 
