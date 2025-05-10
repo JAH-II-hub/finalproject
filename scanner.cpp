@@ -1,11 +1,12 @@
 #include "scanner.h"
 #include <cctype>
 #include <iostream>
+using namespace std;
 
-Token::Token(TokenType typeOfToken, const std::string& valueOfToken) 
+Token::Token(TokenType typeOfToken, const string& valueOfToken) 
     : type(typeOfToken), value(valueOfToken) {}
 
-Scanner::Scanner(const std::string& input) : input(input) {}
+Scanner::Scanner(const string& input) : input(input) {}
 
 void Scanner::skipWhitespace() {
     while (pos < input.length() && isspace(input[pos])) {
@@ -22,9 +23,9 @@ Token Scanner::getNextToken() {
 
     char current = input[pos];
     
-    // Handle negative numbers or subtraction
+    // Handle negative numbers
     if (current == '-' && (pos + 1 < input.length()) && isdigit(input[pos+1])) {
-        std::string number = "-";
+        string number = "-";
         pos++;
         while (pos < input.length() && isdigit(input[pos])) {
             number += input[pos];
@@ -33,9 +34,9 @@ Token Scanner::getNextToken() {
         return Token(NUMBER, number);
     }
     
-    // Handle numbers (positive)
+    // Handle positive numbers
     if (isdigit(current)) {
-        std::string number;
+        string number;
         while (pos < input.length() && isdigit(input[pos])) {
             number += input[pos];
             pos++;
@@ -44,28 +45,28 @@ Token Scanner::getNextToken() {
     }
 
     // Handle operators
-    if (current == '+' || current == '-' || current == '*' || current == '/' || 
-        current == '(' || current == ')') {
-        std::string op(1, current);
+    if (current == '+' || current == '-' || current == '*' || 
+        current == '/' || current == '(' || current == ')') {
+        string op(1, current);
         pos++;
         return Token(OPERATOR, op);
     }
 
     // Handle unknown tokens
-    std::string unknown;
+    string unknown;
     while (pos < input.length() && !isspace(input[pos]) && 
-           !isdigit(input[pos]) &&
-           input[pos] != '+' && input[pos] != '-' &&
-           input[pos] != '*' && input[pos] != '/' &&
-           input[pos] != '(' && input[pos] != ')') {
+           !isdigit(input[pos]) && input[pos] != '+' && 
+           input[pos] != '-' && input[pos] != '*' && 
+           input[pos] != '/' && input[pos] != '(' && 
+           input[pos] != ')') {
         unknown += input[pos];
         pos++;
     }
     return Token(UNKNOWN, unknown);
 }
 
-std::vector<Token> Scanner::getAllTokens() {
-    std::vector<Token> tokens;
+vector<Token> Scanner::getAllTokens() {
+    vector<Token> tokens;
     while (true) {
         Token token = getNextToken();
         if (token.type == END_OF_INPUT) break;

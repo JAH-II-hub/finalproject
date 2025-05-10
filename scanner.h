@@ -3,6 +3,7 @@
 
 #include <string>
 #include <vector>
+using namespace std;
 
 enum TokenType {
     NUMBER,
@@ -13,18 +14,18 @@ enum TokenType {
 
 struct Token {
     TokenType type;
-    std::string value;
-    Token(TokenType typeOfToken, const std::string& valueOfToken);
+    string value;
+    Token(TokenType typeOfToken, const string& valueOfToken);
 };
 
 class Scanner {
 public:
-    Scanner(const std::string& input);
+    Scanner(const string& input);
     Token getNextToken();
-    std::vector<Token> getAllTokens();
+    vector<Token> getAllTokens();
     
 private:
-    std::string input;
+    string input;
     size_t pos = 0;
     void skipWhitespace();
 };
